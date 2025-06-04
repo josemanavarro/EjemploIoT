@@ -1,6 +1,6 @@
 services:
   mosquitto:
-    image: eclipse-mosquitto:latest
+    image: eclipse-mosquitto:${MOSQUITTO_VERSION}
     ports:
       - "1883:1883"
       - "8883:8883"
@@ -14,7 +14,7 @@ services:
       - tarea1-net
 
   node-red:
-    image: nodered/node-red:latest
+    image: nodered/node-red:${NODERED_VERSION}
     ports:
       - "1880:1880"
     volumes:
@@ -28,7 +28,7 @@ services:
       - tarea1-net
 
   influxdb:
-    image: influxdb:latest
+    image: influxdb:${INFLUXDB_VERSION}
     ports:
       - "8086:8086"
     volumes:
@@ -38,7 +38,7 @@ services:
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
-      - DOCKER_INFLUXDB_INIT_PASSWORD=Alandalus2425
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
       - DOCKER_INFLUXDB_INIT_ORG=Al-Andalus
       - DOCKER_INFLUXDB_INIT_BUCKET=Tarea1
     depends_on:
@@ -50,6 +50,11 @@ services:
     build:
       context: ./tester
       dockerfile: Dockerfile
+    environment:
+      - MQTT_USER=${MQTT_USER}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - MQTT_BROKER=mosquitto
+      - MQTT_TOPIC=/aula211/temperatura
     depends_on:
       - mosquitto
     profiles:
@@ -58,14 +63,14 @@ services:
       - tarea1-net
 
   grafana:
-    image: grafana/grafana-oss:latest
+    image: grafana/grafana-oss:${GRAFANA_VERSION}
     ports:
       - "3000:3000"
     volumes:
       - ./grafana/data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=Alandalus2425
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
     depends_on:
       - influxdb
     restart: unless-stopped

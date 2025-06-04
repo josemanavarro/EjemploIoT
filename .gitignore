@@ -1,0 +1,15 @@
+# Environment variables
+.env
+
+# Data directories
+grafana/data/
+influxdb/data/
+mosquitto/data/
+mosquitto/log/
+
+# Node-RED runtime files
+node-red/data/package-lock.json
+node-red/data/node_modules/
+
+# Ignore Grafana database file
+grafana/data/grafana.db

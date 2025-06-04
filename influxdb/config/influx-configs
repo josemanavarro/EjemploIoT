@@ -1,6 +1,6 @@
 [default]
   url = "http://localhost:8086"
-  token = "iRKbR4MswIfU3XJu-LCT7zX2GnX3BJWKkyilNlsJj_X2aMFPRpYD_Qmp6WqSaveTG7Z_X0aH3LnLMWbcmrejPw=="
+  token = "${INFLUXDB_TOKEN}"
   org = "Al-Andalus"
   active = true
 # 
